@@ -2,6 +2,7 @@ import '../styles/App.css';
 
 import React from 'react';
 import Pokedex from 'pokedex-promise-v2';
+
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
@@ -22,30 +23,28 @@ class App extends React.Component {
     let promise = pokedex.getRegionsList()
 
     promise.then(response => {
-      const regions = response.results
-
-      const regionList = regions.map((region, index) => {
-        return (
-          <Nav.Item key={index}>
-            <Nav.Link>
-              {region.name}
-            </Nav.Link>
-          </Nav.Item>
-        )
-      })
-
       this.setState({
-        regions: regionList,
+        regions: response.results,
       })
     })
   }
 
   render() {
+    const regionList = this.state.regions.map((region, index) => {
+      return (
+        <Nav.Item key={index}>
+          <Nav.Link onClick={(i)=> {alert(region.name)} }>
+            {region.name}
+          </Nav.Link>
+        </Nav.Item>
+      )
+    })
+
     return (
       <div className="App">
         <Navbar variant="dark" bg="dark">
           <Nav variant="tabs">
-            {this.state.regions}
+            {regionList}
           </Nav>
         </Navbar>
       </div>
