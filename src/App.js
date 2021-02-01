@@ -1,7 +1,9 @@
 import './App.css';
+
 import React from 'react';
 import Pokedex from 'pokedex-promise-v2';
-// import Bootstrap from 'bootstrap';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
 
 class App extends React.Component {
   constructor(props) {
@@ -24,16 +26,16 @@ class App extends React.Component {
 
       const regionList = regions.map((region, index) => {
         return (
-          <li key={index}>
-            <button>
+          <Nav.Item key={index}>
+            <Nav.Link>
               {region.name}
-            </button>
-          </li>
+            </Nav.Link>
+          </Nav.Item>
         )
       })
 
       this.setState({
-        regions: regionList
+        regions: regionList,
       })
     })
   }
@@ -41,9 +43,11 @@ class App extends React.Component {
   render() {
     return (
       <div className="App">
-        <div className="game-info">
-          <ul>{this.state.regions}</ul>
-        </div>
+        <Navbar variant="dark" bg="dark">
+          <Nav variant="tabs">
+            {this.state.regions}
+          </Nav>
+        </Navbar>
       </div>
     );
   }
