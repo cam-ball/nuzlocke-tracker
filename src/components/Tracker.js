@@ -1,7 +1,6 @@
-// import '../styles/Tracker.css';
-
 import React from 'react';
-import Pokedex from 'pokedex-promise-v2';
+
+import Table from 'react-bootstrap/Table';
 
 class Tracker extends React.Component {
   constructor(props) {
@@ -13,6 +12,8 @@ class Tracker extends React.Component {
   }  
 
   getLocations(regionName) {
+    const Pokedex = require('pokedex-promise-v2');
+
     const pokedex = new Pokedex()
     let promise = pokedex.getRegionByName(regionName)
 
@@ -43,15 +44,22 @@ class Tracker extends React.Component {
     const locations = this.state.locationAreaMap
     const locationList = locations.map((location, index) => {
       return (
-        <li key={index}>
-          {location.location}
-        </li>
+        <tr key={index}>
+          <td>{location.location}</td>
+        </tr>
       )
     });
     
     return (
       <div className="locations">
-        <ul>{locationList}</ul>
+        <Table responsive striped hover variant="dark">
+          <thead>
+            <tr><th>Location</th></tr>
+          </thead>
+          <tbody>
+            {locationList}
+          </tbody>
+        </Table>
       </div>
     );
   }
