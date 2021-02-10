@@ -6,12 +6,17 @@ import Pokedex from 'pokedex-promise-v2';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 
+import Tracker from './Tracker';
+
 class App extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
       regions: [],
+      currentRegion: 'kanto',
     }
+
+    this.trackerRef = React.createRef()
   }
 
   componentDidMount(){
@@ -29,11 +34,18 @@ class App extends React.Component {
     })
   }
 
+  loadRegionTracker(regionName) {
+    this.trackerRef.current.updateRegion(regionName)
+    this.setState({
+      currentRegion: regionName,
+    })
+  }
+
   render() {
     const regionList = this.state.regions.map((region, index) => {
       return (
         <Nav.Item key={index}>
-          <Nav.Link onClick={(i)=> {alert(region.name)} }>
+          <Nav.Link onClick={()=> { this.loadRegionTracker(region.name) } }>
             {region.name}
           </Nav.Link>
         </Nav.Item>
@@ -47,6 +59,12 @@ class App extends React.Component {
             {regionList}
           </Nav>
         </Navbar>
+        <div className='Tracker'>
+          <Tracker 
+            region={this.state.currentRegion} 
+            ref={this.trackerRef}
+          />
+        </div>
       </div>
     );
   }
