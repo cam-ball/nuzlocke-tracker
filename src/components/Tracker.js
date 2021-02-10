@@ -1,4 +1,5 @@
 import React from 'react';
+import Location from './Location';
 
 import Table from 'react-bootstrap/Table';
 
@@ -45,7 +46,10 @@ class Tracker extends React.Component {
     const locationList = locations.map((location, index) => {
       return (
         <tr key={index}>
-          <td>{location.location}</td>
+          <Location 
+            location={location.location}
+            areas={location.areas}
+          />
         </tr>
       )
     });
