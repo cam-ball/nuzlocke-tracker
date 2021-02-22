@@ -5,7 +5,6 @@ class Location extends React.Component {
     super(props)
     this.state = {
       location: this.props.location,
-      areas: this.props.areas,
     }
   }
 

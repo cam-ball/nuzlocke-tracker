@@ -8,7 +8,7 @@ class Tracker extends React.Component {
     super(props);
     this.state = {
       region: this.props.region,
-      locationAreaMap: [],
+      locationList: [],
     };
   }  
 
@@ -19,22 +19,8 @@ class Tracker extends React.Component {
     let promise = pokedex.getRegionByName(regionName)
 
     promise.then(response => {
-      return(response.locations.map(location => location.name))
-    }).then(locationList => {
-      return(pokedex.getLocationByName(locationList))
-    }).then(locationList => {
-      const locationAreaMap = locationList.map(location => {
-        return({
-          location: location.name,
-          areas: location.areas.map(area => area.name),
-        })
-      }).filter(location => {
-        return(location.areas.length > 0)
-      })
-
       this.setState({
-        locationAreaMap: locationAreaMap,
-        region: regionName,
+        locationList: response.locations.map(location => location.name),
       })
     })
   }
@@ -44,13 +30,12 @@ class Tracker extends React.Component {
   }
 
   render() {
-    const locations = this.state.locationAreaMap
-    const locationList = locations.map((location, index) => {
+    const locations = this.state.locationList
+    const locationList = locations.map((location) => {
       return (
-        <tr key={location.location}>
+        <tr key={location}>
           <Location 
-            location={location.location}
-            areas={location.areas}
+            location={location}
           />
         </tr>
       )
