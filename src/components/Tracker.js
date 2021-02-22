@@ -19,8 +19,21 @@ class Tracker extends React.Component {
     let promise = pokedex.getRegionByName(regionName)
 
     promise.then(response => {
+      return(response.locations.map(location => location.name))
+    }).then(locationList => {
+      return(pokedex.getLocationByName(locationList))
+    }).then(locationList => {
+      console.log(locationList)
+      const locations = locationList.map(location => {
+        const enName = location.names.find(name => name.language.name === 'en').name
+        return({
+          location: location.name,
+          enName: enName, 
+        })
+      })
+
       this.setState({
-        locationList: response.locations.map(location => location.name),
+        locationList: locations,
       })
     })
   }
@@ -31,11 +44,12 @@ class Tracker extends React.Component {
 
   render() {
     const locations = this.state.locationList
-    const locationList = locations.map((location) => {
+    const locationList = locations.map((location, index) => {
       return (
-        <tr key={location}>
+        <tr key={location.location}>
           <Location 
-            location={location}
+            location={location.location}
+            enName={location.enName}
           />
         </tr>
       )

@@ -5,12 +5,13 @@ class Location extends React.Component {
     super(props)
     this.state = {
       location: this.props.location,
+      enName: this.props.enName
     }
   }
 
   render() {
     return (
-      <td>{this.state.location}</td>
+      <td>{this.state.enName}</td>
     );
   }
 }
