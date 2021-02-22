@@ -28,6 +28,8 @@ class Tracker extends React.Component {
           location: location.name,
           areas: location.areas.map(area => area.name),
         })
+      }).filter(location => {
+        return(location.areas.length > 0)
       })
 
       this.setState({
@@ -45,7 +47,7 @@ class Tracker extends React.Component {
     const locations = this.state.locationAreaMap
     const locationList = locations.map((location, index) => {
       return (
-        <tr key={index}>
+        <tr key={location.location}>
           <Location 
             location={location.location}
             areas={location.areas}
